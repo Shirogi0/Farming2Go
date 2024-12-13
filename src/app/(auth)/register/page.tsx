@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function Register() {
@@ -10,6 +10,16 @@ export default function Register() {
   const [otp, setOtp] = useState('')
   const [isOtpSent, setIsOtpSent] = useState(false)
   const router = useRouter()
+
+  useEffect(() => {
+    // Check login status on component mount
+    fetch('/api/user')
+      .then(res => {
+        if (res.ok) {
+          router.push('/user')
+        }
+      })
+  }, [router])
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -34,14 +44,14 @@ export default function Register() {
     })
     if (res.ok) {
       const { role } = await res.json()
-      router.push(role === 'admin' ? '/admin' : '/user')
+      window.location.href = role === 'admin' ? '/admin' : '/user'
     } else {
       alert('OTP verification failed')
     }
   }
 
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-md mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Register</h1>
       {!isOtpSent ? (
         <form onSubmit={handleRegister} className="space-y-4">
