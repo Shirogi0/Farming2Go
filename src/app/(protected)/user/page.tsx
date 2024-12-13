@@ -12,6 +12,7 @@ import {
 import { CalendarDays, Mail, UserCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { format } from "date-fns"
 
 export default function UserDashboard() {
   const [user, setUser] = useState<any>(null);
@@ -56,45 +57,50 @@ export default function UserDashboard() {
     // </div>
     //newcode
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white p-4 md:p-8">
-      <div className="max-w-6xl mx-auto space-y-8">
+      <div className="max-w-7xl mx-auto space-y-8">
         <Card className="border-l-4 border-l-green-500">
           <CardHeader>
-            <CardTitle className="text-2xl">User Dashboard</CardTitle>
+            <CardTitle className="text-2xl md:text-3xl">
+              User Dashboard
+            </CardTitle>
             <CardDescription>Welcome back, {user.name}</CardDescription>
           </CardHeader>
-          <CardContent className="grid gap-6">
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-center space-x-4">
-                    <UserCircle className="h-8 w-8 text-gray-500" />
+          <CardContent className="space-y-6">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <Card className="overflow-hidden">
+                <CardContent className="p-0">
+                  <div className="flex items-center p-4">
+                    <UserCircle className="h-10 w-10 text-gray-500 mr-4" />
                     <div>
                       <p className="text-sm font-medium">Role</p>
-                      <p className="text-lg capitalize">{user.role}</p>
+                      <p className="text-lg capitalize break-all">{user.role}</p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-center space-x-4">
-                    <Mail className="h-8 w-8 text-gray-500" />
+              <Card className="overflow-hidden">
+                <CardContent className="p-0">
+                  <div className="flex items-center p-4">
+                    <Mail className="h-10 w-10 text-gray-500 mr-4" />
                     <div>
                       <p className="text-sm font-medium">Email</p>
-                      <p className="text-lg">{user.email}</p>
+                      <p className="text-lg break-all">{user.email}</p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="flex items-center space-x-4">
-                    <CalendarDays className="h-8 w-8 text-gray-500" />
+              <Card className="overflow-hidden">
+                <CardContent className="p-0">
+                  <div className="flex items-center p-4">
+                    <CalendarDays className="h-10 w-10 text-gray-500 mr-4" />
                     <div>
                       <p className="text-sm font-medium">Member Since</p>
-                      <p className="text-lg">January 2024</p>
+                      <p className="text-lg break-all">
+                        {/* {new Date(user.createdAt).toLocaleString()} */}
+                        {format(new Date(user.createdAt), "MMM d, yyyy")}
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -102,12 +108,12 @@ export default function UserDashboard() {
             </div>
 
             <Tabs defaultValue="overview" className="w-full">
-              <TabsList>
+               <TabsList>  {/*className="w-full justify-start overflow-x-auto" */}
                 <TabsTrigger value="overview">Overview</TabsTrigger>
                 <TabsTrigger value="analytics">Analytics</TabsTrigger>
                 <TabsTrigger value="reports">Reports</TabsTrigger>
               </TabsList>
-              <TabsContent value="overview" className="p-4">
+              <TabsContent value="overview" className="mt-6">
                 <h3 className="text-lg font-medium">System Overview</h3>
                 <p className="text-gray-600">
                   Welcome to your personalized dashboard. Here you can manage

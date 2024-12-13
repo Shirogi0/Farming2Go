@@ -36,9 +36,9 @@ export async function POST(req: NextRequest) {
     })
 
     await transporter.sendMail({
-      from: process.env.GMAIL_USER,
+      from: "Farming2Go <farming2go@gmail.com>",
       to: email,
-      subject: 'Your OTP for registration',
+      subject: 'Your OTP for registration in Farming2Go',
       text: `Your OTP is: ${otp}`,
     })
 
