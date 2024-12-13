@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ message: 'User not found' }, { status: 404 })
     }
 
-    return NextResponse.json({ user: { id: user.id, email: user.email, name: user.name, role: user.role} }, { status: 200 })
+    return NextResponse.json({ user: { id: user.id, email: user.email, name: user.name, role: user.role, createdAt: user.createdAt} }, { status: 200 })
   } catch (error) {
     return NextResponse.json({ message: 'Invalid token' }, { status: 401 })
   }

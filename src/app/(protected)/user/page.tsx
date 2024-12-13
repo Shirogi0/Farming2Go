@@ -98,8 +98,8 @@ export default function UserDashboard() {
                     <div>
                       <p className="text-sm font-medium">Member Since</p>
                       <p className="text-lg break-all">
-                        {new Date(user.createdAt).toLocaleString()}
-                        {/* {format(new Date(user.createdAt), "MMM d, yyyy")} */}
+                        {/* {new Date(user.createdAt).toLocaleString()} */}
+                        {format(new Date(user.createdAt), "MMM d, yyyy")}
                       </p>
                     </div>
                   </div>
