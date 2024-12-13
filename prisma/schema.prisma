@@ -14,11 +14,11 @@ generator client {
 }
 
 model User {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  email    String  @unique
-  password String
-  name     String?
-  role     String  @default("user")
-  otp      String?
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  email     String  @unique
+  password  String
+  name      String?
+  role      String  @default("user")
+  otp       String?
   createdAt DateTime @default(now())
 }

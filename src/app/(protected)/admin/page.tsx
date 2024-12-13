@@ -1,44 +1,51 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { CalendarDays, Mail, UserCircle } from 'lucide-react'
-import { Tabs } from '@radix-ui/react-tabs'
-import { TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Button } from '@/components/ui/button'
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { CalendarDays, Mail, UserCircle } from "lucide-react";
+import { Tabs } from "@radix-ui/react-tabs";
+import { TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { format } from "date-fns";
 
 export default function AdminDashboard() {
-  const [user, setUser] = useState<any>(null)
-  const router = useRouter()
+  const [user, setUser] = useState<any>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await fetch('/api/user')
+      const res = await fetch("/api/user");
 
       if (res.ok) {
-        const data = await res.json()
-        if (data.user.role !== 'admin') {
-          router.push('/user')
+        const data = await res.json();
+        if (data.user.role !== "admin") {
+          router.push("/user");
         } else {
-          setUser(data.user)
+          setUser(data.user);
         }
       } else {
-        router.push('/login')
+        router.push("/login");
       }
-    }
+    };
 
-    fetchUser()
-  }, [router])
+    fetchUser();
+  }, [router]);
 
   const handleLogout = async () => {
-    const res = await fetch('/api/auth/logout', { method: 'POST' })
+    const res = await fetch("/api/auth/logout", { method: "POST" });
     if (res.ok) {
-      router.push('/dashboard')
+      router.push("/dashboard");
     }
-  }
+  };
 
-  if (!user) return <div>Loading...</div>
+  if (!user) return <div>Loading...</div>;
 
   return (
     // <div className="max-w-md mx-auto p-4 bg-red-50 rounded-lg shadow-md">
@@ -58,27 +65,27 @@ export default function AdminDashboard() {
       <div className="max-w-7xl mx-auto space-y-8">
         <Card className="border-l-4 border-l-pink-500">
           <CardHeader>
-          <CardTitle className="text-2xl md:text-3xl">
+            <CardTitle className="text-2xl md:text-3xl">
               Admin Dashboard
             </CardTitle>
-            <CardDescription>
-              Welcome back, {user.name}
-            </CardDescription>
+            <CardDescription>Welcome back, {user.name}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <Card className="overflow-hidden">
                 <CardContent className="p-0">
-                <div className="flex items-center p-4">
-                <UserCircle className="h-10 w-10 text-gray-500 mr-4" />
+                  <div className="flex items-center p-4">
+                    <UserCircle className="h-10 w-10 text-gray-500 mr-4" />
                     <div>
                       <p className="text-sm font-medium">Role</p>
-                      <p className="text-lg capitalize break-all">{user.role}</p>
+                      <p className="text-lg capitalize break-all">
+                        {user.role}
+                      </p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-              
+
               <Card className="overflow-hidden">
                 <CardContent className="p-0">
                   <div className="flex items-center p-4">
@@ -97,7 +104,10 @@ export default function AdminDashboard() {
                     <CalendarDays className="h-10 w-10 text-gray-500 mr-4" />
                     <div>
                       <p className="text-sm font-medium">Member Since</p>
-                      <p className="text-lg break-all">{new Date(user.createdAt).toLocaleString()}</p>
+                      <p className="text-lg break-all">
+                        {/* {new Date(user.createdAt).toLocaleString()} */}
+                        {format(new Date(user.createdAt), "MMM d, yyyy")}
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -113,8 +123,9 @@ export default function AdminDashboard() {
               <TabsContent value="overview" className="mt-6">
                 <h3 className="text-lg font-medium">System Overview</h3>
                 <p className="text-gray-600">
-                  Welcome to your personalized dashboard. Here you can manage your farming operations,
-                  view analytics, and access important reports.
+                  Welcome to your personalized dashboard. Here you can manage
+                  your farming operations, view analytics, and access important
+                  reports.
                 </p>
               </TabsContent>
               <TabsContent value="analytics" className="p-4">
@@ -134,6 +145,5 @@ export default function AdminDashboard() {
         </Card>
       </div>
     </div>
-  )
+  );
 }
-
