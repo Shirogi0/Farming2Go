@@ -20,4 +20,5 @@ model User {
   name     String?
   role     String  @default("user")
   otp      String?
+  createdAt DateTime @default(now())
 }
